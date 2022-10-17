@@ -6,62 +6,9 @@ linklib 'SDL2'
 ]]
 
 require 'math'
+require 'sdl2'
 
 -- SDL2 Snake Game Demo
-
--- import SDL structures
-local SDL_Event <cimport> = @record{
-  type: uint32,
-  padding: [56]byte
-}
-local SDL_Keysym <cimport> = @record{
-  scancode: cint,
-  sym: int32,
-  mod: uint16,
-  unused: uint32
-}
-local SDL_KeyboardEvent <cimport> = @record{
-  type: uint32,
-  timestamp: uint32,
-  windowID: uint32,
-  state: uint8,
-  repeated: uint8,
-  padding: uint16,
-  keysym: SDL_Keysym
-}
-local SDL_Rect <cimport> = @record{
-  x: cint, y: cint,
-  w: cint, h: cint,
-}
-local SDL_Window <cimport> = @record{}
-local SDL_Renderer <cimport> = @record{}
-
--- import SDL constants
-local SDL_INIT_VIDEO <comptime> = 0x20
-local SDL_WINDOWPOS_UNDEFINED <comptime> = 0x1fff0000
-local SDL_WINDOW_OPENGL <comptime> = 0x2
-local SDL_QUIT <comptime> = 0x100
-local SDL_KEYDOWN <comptime> = 0x300
-local SDLK_RIGHT <comptime> = 79 | 0x40000000
-local SDLK_LEFT <comptime> = 80 | 0x40000000
-local SDLK_DOWN <comptime> = 81 | 0x40000000
-local SDLK_UP <comptime> = 82 | 0x40000000
-local SDL_RENDERER_ACCELERATED <comptime> = 0x2
-local SDL_RENDERER_PRESENTVSYNC <comptime> = 0x4
-
--- import SDL functions
-local function SDL_Init(flags: uint32): int32 <cimport> end
-local function SDL_CreateWindow(title: cstring, x: cint, y: cint, w: cint, h: cint, flags: uint32): *SDL_Window <cimport> end
-local function SDL_Quit() <cimport> end
-local function SDL_DestroyWindow(window: *SDL_Window) <cimport> end
-local function SDL_PollEvent(event: *SDL_Event): int32 <cimport> end
-local function SDL_CreateRenderer(window: *SDL_Window, index: cint, flags: uint32): *SDL_Renderer <cimport> end
-local function SDL_DestroyRenderer(renderer: *SDL_Renderer) <cimport> end
-local function SDL_RenderPresent(renderer: *SDL_Renderer) <cimport> end
-local function SDL_RenderClear(renderer: *SDL_Renderer): cint <cimport> end
-local function SDL_SetRenderDrawColor(renderer: *SDL_Renderer, r: uint8, g: uint8, b: uint8, a: uint8): cint <cimport> end
-local function SDL_RenderFillRect(renderer: *SDL_Renderer, rect: *SDL_Rect): cint <cimport> end
-local function SDL_GetTicks(): uint32 <cimport> end
 
 -- game types
 local Point2D = @record{x: integer, y: integer}
